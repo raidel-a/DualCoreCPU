@@ -1,0 +1,13 @@
+module MemoryArbiter (
+    input clock,
+    input reset,
+    input core0_req,
+    input core1_req,
+    input [31:0] core0_addr,
+    input [31:0] core1_addr,
+    input [31:0] core0_writedata,
+    input [31:0] core1_writedata,
+    output reg [31:0] shared_addr,
+    output reg shared_write,
+    output reg [31:0] shared_writedata
+);

@@ -1,0 +1,7 @@
+module SharedMemory (
+    input clock,
+    input [31:0] addr,
+    input write_enable,
+    input [31:0] write_data,
+    output reg [31:0] read_data
+);
