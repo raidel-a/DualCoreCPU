@@ -1,0 +1,14 @@
+// Address  : Instruction
+// Core 0 program
+00000000: 20020001  // addi $2, $0, 1    # Store 1 in register $2
+00000004: AC020000  // sw $2, 0($0)      # Store value to memory address 0
+00000008: 8C030000  // lw $3, 0($0)      # Load from memory address 0
+0000000C: 20020002  // addi $2, $0, 2    # Store 2 in register $2
+00000010: AC020004  // sw $2, 4($0)      # Store value to memory address 4
+
+// Core 1 program (starts at different address)
+00000100: 20020003  // addi $2, $0, 3    # Store 3 in register $2
+00000104: AC020008  // sw $2, 8($0)      # Store value to memory address 8
+00000108: 8C030004  // lw $3, 4($0)      # Load from memory address 4
+0000010C: 20020004  // addi $2, $0, 4    # Store 4 in register $2
+00000110: AC02000C  // sw $2, 12($0)     # Store value to memory address 12 

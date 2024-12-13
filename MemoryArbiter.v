@@ -15,7 +15,12 @@ module MemoryArbiter (
     output reg [31:0] shared_addr,
     output reg shared_write,
     output reg [31:0] shared_writedata,
-    input [31:0] shared_readdata
+    input [31:0] shared_readdata,
+    // Add GPU interface
+    input gpu_mem_write,
+    input [31:0] gpu_mem_addr,
+    input [31:0] gpu_mem_writedata,
+    output reg [31:0] gpu_mem_readdata
 );
 
     // Round-robin arbitration
@@ -29,6 +34,7 @@ module MemoryArbiter (
             shared_writedata <= 32'b0;
             core0_mem_readdata <= 32'b0;
             core1_mem_readdata <= 32'b0;
+            gpu_mem_readdata <= 32'b0;
         end
         else begin
             if (core0_mem_write && !current_core) begin
@@ -44,6 +50,13 @@ module MemoryArbiter (
                 shared_write <= 1;
                 current_core <= 0;
                 core1_mem_readdata <= shared_readdata;
+            end
+            else if (gpu_mem_write && current_core == 2) begin
+                shared_addr <= gpu_mem_addr;
+                shared_writedata <= gpu_mem_writedata;
+                shared_write <= 1;
+                current_core <= 0;
+                gpu_mem_readdata <= shared_readdata;
             end
             else begin
                 shared_write <= 0;
